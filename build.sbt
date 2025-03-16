@@ -81,10 +81,10 @@ lazy val root = Project(auth4s, file("."))
 
 lazy val auth4sCore = createAuth4sModule("core")
   .withDependencies(
-      Dependencies.typesafeConfig,
-      Dependencies.catsCore,
-      Dependencies.nimbusJoseJwt,
-      Dependencies.scalaTest % Test,
-      Dependencies.scalaTestPlusScalaCheck % Test,
-      Dependencies.scalacheck % Test,
+    Dependencies.typesafeConfig,
+    Dependencies.catsCore,
+    Dependencies.nimbusJoseJwt,
+    Dependencies.scalaTest               % Test,
+    Dependencies.scalaTestPlusScalaCheck % Test,
+    Dependencies.scalacheck              % Test,
   )

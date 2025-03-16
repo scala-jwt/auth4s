@@ -1,5 +1,3 @@
 package io.auth4s
 
-trait JwtIssuer[F[_]] {
-
-}
+trait JwtIssuer[F[_]] {}
