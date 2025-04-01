@@ -5,31 +5,31 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 ThisBuild / scalaVersion := "3.3.5"
 
-ThisBuild / Test / fork := true
-ThisBuild / run / fork := true
-ThisBuild / Test / parallelExecution := false
+ThisBuild / Test / fork               := true
+ThisBuild / run / fork                := true
+ThisBuild / Test / parallelExecution  := false
 ThisBuild / Test / testForkedParallel := true
 
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := "4.8.15"
 
-ThisBuild / tlBaseVersion := "0.0"
-ThisBuild / organization := "io.github.scala-jwt"
-ThisBuild / organizationName := "auth4s"
-ThisBuild / organizationHomepage := Some(url("https://github.com/scala-jwt/auth4s"))
-ThisBuild / tlMimaPreviousVersions := Set.empty
-ThisBuild / licenses := Seq(License.Apache2)
-ThisBuild / developers := List(
+ThisBuild / tlBaseVersion              := "0.0"
+ThisBuild / organization               := "io.github.scala-jwt"
+ThisBuild / organizationName           := "auth4s"
+ThisBuild / organizationHomepage       := Some(url("https://github.com/scala-jwt/auth4s"))
+ThisBuild / tlMimaPreviousVersions     := Set.empty
+ThisBuild / licenses                   := Seq(License.Apache2)
+ThisBuild / developers                 := List(
   tlGitHubDev("andrewrigas", "Andreas Rigas")
 )
-ThisBuild / sonatypeCredentialHost := xerial.sbt.Sonatype.sonatypeLegacy
-ThisBuild / startYear := Some(2025)
-ThisBuild / githubWorkflowPermissions := Some(Permissions.WriteAll)
+ThisBuild / sonatypeCredentialHost     := xerial.sbt.Sonatype.sonatypeLegacy
+ThisBuild / startYear                  := Some(2025)
+ThisBuild / githubWorkflowPermissions  := Some(Permissions.WriteAll)
 ThisBuild / githubWorkflowJavaVersions := Seq("11", "17", "21").map(JavaSpec.temurin)
 ThisBuild / githubWorkflowAddedJobs ++= Seq(
   WorkflowJob(
-    id     = "checklint",
-    name   = "Check code style",
+    id = "checklint",
+    name = "Check code style",
     scalas = List(scalaVersion.value),
     steps = List(WorkflowStep.Checkout) ++ WorkflowStep.SetupJava(
       List(githubWorkflowJavaVersions.value.last)
@@ -41,8 +41,8 @@ ThisBuild / githubWorkflowAddedJobs ++= Seq(
     ),
   ),
   WorkflowJob(
-    id     = "Codecov",
-    name   = "Codecov",
+    id = "Codecov",
+    name = "Codecov",
     scalas = List(scalaVersion.value),
     steps = List(WorkflowStep.Checkout) ++ WorkflowStep.SetupJava(
       List(githubWorkflowJavaVersions.value.last)
@@ -83,7 +83,17 @@ lazy val auth4sCore = createAuth4sModule("core")
   .withDependencies(
     Dependencies.typesafeConfig,
     Dependencies.catsCore,
-    Dependencies.nimbusJoseJwt,
+    Dependencies.jjwtApi,
+    Dependencies.jjwtImpl,
+    Dependencies.jjwtJackson,
+    Dependencies.catsEffect,
+    Dependencies.scalaTest               % Test,
+    Dependencies.scalaTestPlusScalaCheck % Test,
+    Dependencies.scalacheck              % Test,
+  )
+
+lazy val auth4sMacros = createAuth4sModule("macros")
+  .withDependencies(
     Dependencies.scalaTest               % Test,
     Dependencies.scalaTestPlusScalaCheck % Test,
     Dependencies.scalacheck              % Test,

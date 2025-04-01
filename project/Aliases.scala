@@ -10,6 +10,6 @@ object Aliases {
   lazy val scalaFmt = addCommandAlias("checkFmt", "scalafmtCheckAll; scalafmtSbtCheck") ++
     addCommandAlias("runFmt", "scalafmtAll; scalafmtSbt")
 
-  lazy val scalaFix = addCommandAlias("checkFix", "scalafixAll --check OrganizeImports; scalafixAll --check") ++
-    addCommandAlias("runFix", "scalafixAll OrganizeImports; scalafixAll")
+  lazy val scalaFix = addCommandAlias("checkFix", "scalafixAll --check") ++
+    addCommandAlias("runFix", "scalafixAll")
 }
