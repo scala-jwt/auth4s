@@ -1,7 +1,7 @@
 package io.auth4s
 
+import org.scalacheck.*
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.{Arbitrary, Gen}
 
 import java.time.Instant
 

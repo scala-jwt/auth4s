@@ -1,6 +1,7 @@
 package io.auth4s
 
-import io.jsonwebtoken.JwtBuilder
+import cats.ApplicativeThrow
+import io.jsonwebtoken.ClaimsBuilder
 
 import java.time.Instant
 import java.util.Date
@@ -19,8 +20,8 @@ final case class RegisteredClaims(
 
 object RegisteredClaims {
 
-  given claimsEncoder: JwtClaimsEncoder[RegisteredClaims] = new JwtClaimsEncoder[RegisteredClaims] {
-    override def encode(claims: RegisteredClaims, builder: JwtBuilder): JwtBuilder =
+  given claimsEncoder[F[_] : ApplicativeThrow]: PayloadEncoder[F, RegisteredClaims] =
+    PayloadEncoder.apply[F, RegisteredClaims] { (claims: RegisteredClaims, builder: ClaimsBuilder) =>
       builder
         .pipe(builder => claims.iss.fold(builder)(builder.issuer))
         .pipe(builder => claims.sub.fold(builder)(builder.subject))
@@ -29,7 +30,8 @@ object RegisteredClaims {
         .pipe(builder => claims.nbf.fold(builder)(i => builder.notBefore(Date.from(i))))
         .pipe(builder => claims.iat.fold(builder)(i => builder.issuedAt(Date.from(i))))
         .pipe(builder => claims.jti.fold(builder)(builder.id))
-  }
+        .build()
+    }
 
   def empty: RegisteredClaims = RegisteredClaims()
 }
