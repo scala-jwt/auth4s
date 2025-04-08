@@ -9,7 +9,7 @@ object Dependencies {
   lazy val circeV              = "0.14.11"
   lazy val jsoniterScalaV      = "2.33.2"
   lazy val catsV               = "2.13.0"
-  lazy val NimbusdsV           = "10.0.2"
+  lazy val NimbusdsV           = "10.2"
 
   // Testing
   lazy val scalaTest               = "org.scalatest"     %% "scalatest"       % scalaTestV
