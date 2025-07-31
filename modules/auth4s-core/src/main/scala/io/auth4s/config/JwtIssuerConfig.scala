@@ -1,5 +1,7 @@
 package io.auth4s.config
 
+import java.security.Key
+
 final case class JwtIssuerConfig(
-    algorithm: JwtIssueAlgorithm
+    algorithm: Option[JwtIssueAlgorithm] = None
 )

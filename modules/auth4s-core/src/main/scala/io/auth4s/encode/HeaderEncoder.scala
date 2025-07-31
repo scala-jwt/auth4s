@@ -1,4 +1,4 @@
-package io.auth4s
+package io.auth4s.encode
 
 import cats.syntax.all.*
 import cats.{Applicative, ApplicativeThrow}

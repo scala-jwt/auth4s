@@ -37,4 +37,10 @@ object Dependencies {
   lazy val catsEffect = "org.typelevel" %% "cats-effect" % catsEffectV
 
   lazy val typesafeConfig = "com.typesafe" % "config" % configV
+
+  lazy val zioV                = "2.1.17"
+  lazy val zioInteropCatsV     = "23.1.0.5"
+
+  lazy val zio               = "dev.zio" %% "zio"                 % zioV
+  lazy val zioInteropCats    = "dev.zio" %% "zio-interop-cats"    % zioInteropCatsV
 }

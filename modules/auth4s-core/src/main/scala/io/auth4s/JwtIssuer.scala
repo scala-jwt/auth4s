@@ -3,9 +3,11 @@ package io.auth4s
 import cats.*
 import cats.syntax.all.*
 import io.auth4s.config.JwtIssuerConfig
+import io.auth4s.encode.*
 import io.auth4s.internal.syntax.all.*
 import io.jsonwebtoken.{JwtBuilder, Jwts}
 
+import java.security.Key
 import scala.util.chaining.scalaUtilChainingOps
 
 trait JwtIssuer[F[_]] {
@@ -22,8 +24,8 @@ object JwtIssuer {
     ): F[Jwt[H, P]] =
       for {
         encoded <- jwtBuilder.encode(jwtClaims)
-//        signed  <- encoded.issue(config.algorithm)
-      } yield encoded.compact().pipe(Jwt(jwtClaims, _))
+        issued  <- encoded.issue(config.algorithm)
+      } yield issued.compact().pipe(Jwt(jwtClaims, _))
   }
 
   def noop[F[_] : Applicative]: JwtIssuer[F] = new JwtIssuer[F] {

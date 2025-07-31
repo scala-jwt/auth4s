@@ -1,6 +1,7 @@
 package io.auth4s
 
 import cats.ApplicativeThrow
+import io.auth4s.encode.PayloadEncoder
 import io.jsonwebtoken.ClaimsBuilder
 
 import java.time.Instant
@@ -19,8 +20,9 @@ final case class RegisteredClaims(
 )
 
 object RegisteredClaims {
+  lazy val empty: RegisteredClaims = RegisteredClaims()
 
-  given claimsEncoder[F[_] : ApplicativeThrow]: PayloadEncoder[F, RegisteredClaims] =
+  inline given claimsEncoder[F[_] : ApplicativeThrow]: PayloadEncoder[F, RegisteredClaims] =
     PayloadEncoder.apply[F, RegisteredClaims] { (claims: RegisteredClaims, builder: ClaimsBuilder) =>
       builder
         .pipe(builder => claims.iss.fold(builder)(builder.issuer))
@@ -32,6 +34,4 @@ object RegisteredClaims {
         .pipe(builder => claims.jti.fold(builder)(builder.id))
         .build()
     }
-
-  def empty: RegisteredClaims = RegisteredClaims()
 }

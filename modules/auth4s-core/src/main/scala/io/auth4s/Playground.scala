@@ -1,21 +1,40 @@
 package io.auth4s
+
+import cats.effect.IO
+import cats.syntax.all.*
+import cats.effect.unsafe.implicits.global
+import io.auth4s.config.*
 import io.jsonwebtoken.Jwts
 
-import java.util.UUID
+import java.security.*
+import java.util.Base64
+import javax.crypto.SecretKey
 
 object Playground extends App {
 
   val jwtClaims: JwtClaims[Nothing, Nothing] = JwtClaims.empty
 
-  val pair: KeyPair = Jwts.SIG.RS512.keyPair.build
+  val pair: KeyPair           = Jwts.SIG.RS512.keyPair.build
   val secretKey256: SecretKey = Jwts.SIG.HS256.key.build
-  val secretKey384 = Jwts.SIG.HS384.key.build
-  val secretKey512 = Jwts.SIG.HS512.key.build
+  val secretKey384            = Jwts.SIG.HS384.key.build
+  val secretKey512            = Jwts.SIG.HS512.key.build
 
-  val config: JwtIssuerConfig = JwtIssuerConfig(
-    algorithm = JwtIssueAlgorithm.Signature(
-      SignatureAlgorithm.HS256(secretKey256)
-    )
+  val config = JwtIssuerConfig(
+//    algorithm = Option.empty
+    algorithm = JwtIssueAlgorithm
+      .Signature(
+        SignatureAlgorithm.HS256(secretKey256)
+      )
+      .some
+  )
+
+  val config = JwtIssuerConfig(
+    //    algorithm = Option.empty
+    algorithm = JwtIssueAlgorithm
+      .Signature(
+        SignatureAlgorithm.RS512(secretKey256)
+      )
+      .some
   )
 
   val s: Jwt[Nothing, Nothing] = JwtIssuer[IO](config).issue(jwtClaims).unsafeRunSync()

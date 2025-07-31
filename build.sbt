@@ -11,7 +11,7 @@ ThisBuild / Test / parallelExecution  := false
 ThisBuild / Test / testForkedParallel := true
 
 ThisBuild / semanticdbEnabled := true
-ThisBuild / semanticdbVersion := "4.8.15"
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
 ThisBuild / tlBaseVersion              := "0.0"
 ThisBuild / organization               := "io.github.scala-jwt"
@@ -87,6 +87,8 @@ lazy val auth4sCore = createAuth4sModule("core")
     Dependencies.jjwtImpl,
     Dependencies.jjwtJackson,
     Dependencies.catsEffect,
+//    Dependencies.zio,
+//    Dependencies.zioInteropCats,
     Dependencies.scalaTest               % Test,
     Dependencies.scalaTestPlusScalaCheck % Test,
     Dependencies.scalacheck              % Test,

@@ -1,7 +1,13 @@
 package io.auth4s.internal.syntax
 
-import io.auth4s.{JwtClaims, JwtClaimsEncoder}
+import cats.*
+import cats.syntax.all.*
+import io.auth4s.*
+import io.auth4s.config.JwtIssueAlgorithm
+import io.auth4s.encode.*
 import io.jsonwebtoken.JwtBuilder
+
+import java.security.Key
 
 private[auth4s] object all {
 
@@ -10,14 +16,16 @@ private[auth4s] object all {
       encoder.encode(jwtClaims, jwtBuilder)
   }
 
-//  extension (jwtBuilder: JwtBuilder) {
-//    def issue[F[_] : MonadThrow](
-//        jwtIssueAlgorithm: JwtIssueAlgorithm
-//    ): F[JwtBuilder] =
-//      jwtIssueAlgorithm match {
-//        case signAlgorithm: JwtIssueAlgorithm.Signature[Key, Key] =>
-//          MonadThrow[F].catchNonFatal(jwtBuilder.signWith(signAlgorithm.alg.privateKey, signAlgorithm.alg.algorithm))
-//        case JwtIssueAlgorithm.Encryption(_)                      => ???
-//      }
-//  }
+  extension (jwtBuilder: JwtBuilder) {
+    def issue[F[_] : MonadThrow](
+        jwtIssueAlgorithm: Option[JwtIssueAlgorithm]
+    ): F[JwtBuilder] =
+      jwtIssueAlgorithm match {
+        case Some(signAlgorithm: JwtIssueAlgorithm.Signature) =>
+          MonadThrow[F].catchNonFatal(jwtBuilder.signWith(signAlgorithm.alg.privateKey, signAlgorithm.alg.algorithm))
+        case Some(JwtIssueAlgorithm.Encryption(_))            =>
+          MonadThrow[F].catchNonFatal(jwtBuilder.encryptWith())
+        case None                                             => jwtBuilder.pure[F]
+      }
+  }
 }
