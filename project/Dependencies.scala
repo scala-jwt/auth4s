@@ -4,7 +4,7 @@ object Dependencies {
 
   lazy val scalaTestV          = "3.2.19"
   lazy val scalaTestPlusCheckV = "3.2.18.0"
-  lazy val scalacheckV         = "1.18.1"
+  lazy val scalacheckV         = "1.19.0"
   lazy val configV             = "1.4.3"
   lazy val circeV              = "0.14.11"
   lazy val jsoniterScalaV      = "2.33.2"
