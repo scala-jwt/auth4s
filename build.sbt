@@ -3,7 +3,7 @@ import org.typelevel.sbt.gha.Permissions
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-ThisBuild / scalaVersion := "3.3.5"
+ThisBuild / scalaVersion := "3.3.7"
 
 ThisBuild / Test / fork := true
 ThisBuild / run / fork := true
