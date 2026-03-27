@@ -2,7 +2,7 @@ import sbt.*
 
 object Dependencies {
 
-  lazy val scalaTestV          = "3.2.19"
+  lazy val scalaTestV          = "3.2.20"
   lazy val scalaTestPlusCheckV = "3.2.18.0"
   lazy val scalacheckV         = "1.18.1"
   lazy val configV             = "1.4.3"
