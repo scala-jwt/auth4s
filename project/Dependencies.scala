@@ -3,7 +3,7 @@ import sbt.*
 object Dependencies {
 
   lazy val scalaTestV          = "3.2.19"
-  lazy val scalaTestPlusCheckV = "3.2.18.0"
+  lazy val scalaTestPlusCheckV = "3.2.19.0"
   lazy val scalacheckV         = "1.18.1"
   lazy val configV             = "1.4.3"
   lazy val circeV              = "0.14.11"
@@ -13,7 +13,7 @@ object Dependencies {
 
   // Testing
   lazy val scalaTest               = "org.scalatest"     %% "scalatest"       % scalaTestV
-  lazy val scalaTestPlusScalaCheck = "org.scalatestplus" %% "scalacheck-1-17" % scalaTestPlusCheckV
+  lazy val scalaTestPlusScalaCheck = "org.scalatestplus" %% "scalacheck-1-18" % scalaTestPlusCheckV
   lazy val scalacheck              = "org.scalacheck"    %% "scalacheck"      % scalacheckV
 
   // Circe
